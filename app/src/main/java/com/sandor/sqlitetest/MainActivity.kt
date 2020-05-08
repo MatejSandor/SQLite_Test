@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         val database = baseContext.openOrCreateDatabase("sqlite-test-1.db", Context.MODE_PRIVATE, null)
+        database.execSQL("DROP TABLE IF EXISTS contacts")
         var sql = "CREATE TABLE IF NOT EXISTS contacts(_id INTEGER PRIMARY KEY NOT NULL, name TEXT, phone INTEGER, email TEXT)"
         Log.d(TAG, "onCreate: sql is $sql")
         database.execSQL(sql)
@@ -40,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 
         val query = database.rawQuery("SELECT * FROM contacts", null)
         query.use {
-            if(it.moveToFirst()) {
+            while(it.moveToNext()) {
                 with(query) {
                     val id = getLong(0)
                     val name = getString(1)
