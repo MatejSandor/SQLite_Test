@@ -19,23 +19,31 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        val database = baseContext.openOrCreateDatabase("sqlite-test-1.db", Context.MODE_PRIVATE,null)
-        var sql = "CREATE TABLE contacts(_id INTEGER PRIMARY KEY NOT NULL, name TEXT, phone INTEGER, email TEXT)"
-        Log.d(TAG,"onCreate: called")
+        val database = baseContext.openOrCreateDatabase("sqlite-test-1.db", Context.MODE_PRIVATE, null)
+        var sql = "CREATE TABLE contacts_test(_id INTEGER PRIMARY KEY NOT NULL, name TEXT, phone INTEGER, email TEXT)"
+        Log.d(TAG, "onCreate: sql is $sql")
         database.execSQL(sql)
 
-        sql = "INSERT INTO contacts(name,phone,email) VALUES('tim',654321,'tim@mail.com')"
-        Log.d(TAG,"onCreate: sql is $sql")
+        sql = "INSERT INTO contacts(name, phone, email) VALUES('tim', 6456789, 'tim@email.com')"
+        Log.d(TAG, "onCreate: sql is $sql")
         database.execSQL(sql)
+
 
         val values = ContentValues().apply {
-            put("name","Fred")
-            put("phone",123456)
-            put("email","fred@gmail.com")
+            put("name", "Fred")
+            put("phone", 12345)
+            put("email", "fred@nurk.com")
         }
 
-        val generatedId = database.insert("contacts",null,values)
-        Log.d(TAG,"onCreate: record added with id $generatedId")
+        //         val values = ContentValues()
+        //         values.put("name", "Fred")
+        //         values.put("phone", 12345)
+        //         values.put("email", "fred@nurk.com")
+
+        val generatedId = database.insert("contacts",  null, values)
+        Log.d(TAG, "onCreate: record added with id $generatedId")
+
+
 
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
