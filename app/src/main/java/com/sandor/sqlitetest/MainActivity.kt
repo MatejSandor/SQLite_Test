@@ -1,5 +1,6 @@
 package com.sandor.sqlitetest
 
+import android.content.Context
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
@@ -14,6 +15,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+
+        val database = baseContext.openOrCreateDatabase("sqlite-test-1.db", Context.MODE_PRIVATE,null)
+        var sql = "CREATE TABLE contacts(_id INTEGER PRIMARY KEY NOT NULL, name TEXT, phone INTEGER, email TEXT)"
+        database.execSQL(sql)
+
+        sql = "INSERT INTO contacts(name,phone,email) VALUES('tim',654321,'tim@mail.com')"
+        database.execSQL(sql)
 
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
