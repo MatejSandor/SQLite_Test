@@ -3,6 +3,7 @@ package com.sandor.sqlitetest
 import android.content.ContentValues
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
@@ -20,9 +21,11 @@ class MainActivity : AppCompatActivity() {
 
         val database = baseContext.openOrCreateDatabase("sqlite-test-1.db", Context.MODE_PRIVATE,null)
         var sql = "CREATE TABLE contacts(_id INTEGER PRIMARY KEY NOT NULL, name TEXT, phone INTEGER, email TEXT)"
+        Log.d(TAG,"onCreate: called")
         database.execSQL(sql)
 
         sql = "INSERT INTO contacts(name,phone,email) VALUES('tim',654321,'tim@mail.com')"
+        Log.d(TAG,"onCreate: sql is $sql")
         database.execSQL(sql)
 
         val values = ContentValues().apply {
@@ -30,8 +33,9 @@ class MainActivity : AppCompatActivity() {
             put("phone",123456)
             put("email","fred@gmail.com")
         }
-        
+
         val generatedId = database.insert("contacts",null,values)
+        Log.d(TAG,"onCreate: record added with id $generatedId")
 
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
