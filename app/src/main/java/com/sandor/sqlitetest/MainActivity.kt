@@ -1,13 +1,15 @@
 package com.sandor.sqlitetest
 
+import android.content.ContentValues
 import android.content.Context
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-
 import kotlinx.android.synthetic.main.activity_main.*
+
+private const val TAG = "MainActivity"
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,6 +24,14 @@ class MainActivity : AppCompatActivity() {
 
         sql = "INSERT INTO contacts(name,phone,email) VALUES('tim',654321,'tim@mail.com')"
         database.execSQL(sql)
+
+        val values = ContentValues().apply {
+            put("name","Fred")
+            put("phone",123456)
+            put("email","fred@gmail.com")
+        }
+        
+        val generatedId = database.insert("contacts",null,values)
 
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
